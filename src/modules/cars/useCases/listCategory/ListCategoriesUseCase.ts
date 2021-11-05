@@ -1,12 +1,12 @@
 
-import { Category } from "../../model/Category";
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository"
+import { Category } from "../../entities/Category";
+import { CategoriesRespository } from "../../repositories/CategoryRepository";
 
 class ListCategoriesUseCase {
-    constructor(private categoriesRepository: ICategoriesRepository) {}
+    constructor(private categoryRepository: CategoriesRespository) {}
      
-    execute(): Category[] {
-        const categories = this.categoriesRepository.list();
+    async execute(): Promise<Category[]> {
+        const categories = await this.categoryRepository.list();
         return categories;
     }
 }

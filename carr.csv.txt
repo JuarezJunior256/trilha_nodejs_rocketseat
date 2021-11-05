@@ -1,0 +1,3 @@
+USV, Utilitário esportivo
+Sedan, automóvel de 5 lugares
+Hatch, carro curto
