@@ -8,16 +8,16 @@ class User {
     id?: string;
 
     @Column()
-    name?: string;
+    name!: string;
 
-   @Column()
-    email?: string;
+    @Column()
+    email!: string;
     
     @Column()
-    password?: string;
+    password!: string;
     
     @Column()
-    driver_license?: string;
+    driver_license!: string;
     
     @Column()
     isAdmin?: boolean;
