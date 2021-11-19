@@ -10,6 +10,7 @@ interface Ipayload {
 export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
     // requisação do token 
     const authHeader = request.headers.authorization;
+    
     // se não tiver token lança um erro 
     if (!authHeader) {
         throw new AppError("Token missing");
@@ -29,6 +30,10 @@ export async function ensureAuthenticated(request: Request, response: Response, 
 
         if (!user) {
             throw new AppError("Usuário não existe");
+        }
+
+        request.user = {
+            id: user_id
         }
 
         next();
