@@ -1,5 +1,4 @@
 import fs from "fs";
-import { specificationRoutes } from "../routes/specification.routes";
 
 export const deleteFile = async(filename: string) => {
 
