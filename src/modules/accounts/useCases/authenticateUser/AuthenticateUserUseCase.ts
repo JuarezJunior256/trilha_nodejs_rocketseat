@@ -1,29 +1,31 @@
-import { inject, injectable } from "tsyringe";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { inject, injectable } from "tsyringe";
 
-import {compare} from "bcrypt";
 import { AppError } from "../../../../shared/errors/AppError";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
-    email: string; password: string;
+    email: string;
+    password: string;
 }
 
 interface IResponse {
     user: {
-        name: string; email: string;
+        name: string;
+        email: string;
     };
     token: string;
-};
+}
 
 @injectable()
 class AuthenticateUserUseCase {
-    constructor( 
+    constructor(
         @inject("UsersRepository")
         private usersRepository: IUsersRepository
     ) {}
 
-    async execute({email, password}: IRequest): Promise<IResponse> {
+    async execute({ email, password }: IRequest): Promise<IResponse> {
         // validar usuario
         const user = await this.usersRepository.findByEmail(email);
 
@@ -41,19 +43,20 @@ class AuthenticateUserUseCase {
         // gerar token
         const token = sign({}, "3511a5007530480161bb058abfccab47", {
             subject: user.id,
-            expiresIn: "1d"
+            expiresIn: "1d",
         });
 
+        // retornar token de usuário
         const tokenReturn: IResponse = {
             token,
             user: {
                 name: user.name,
-                email: user.email
-            }
-        }
+                email: user.email,
+            },
+        };
 
         return tokenReturn;
     }
 }
 
-export {AuthenticateUserUseCase};
+export { AuthenticateUserUseCase };

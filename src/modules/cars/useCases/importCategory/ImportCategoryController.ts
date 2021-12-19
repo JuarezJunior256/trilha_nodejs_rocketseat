@@ -1,13 +1,15 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
+
 import { ImportCategoryUseCase } from "./ImportCategoryUseCase";
+
 import "reflect-metadata";
-import {container} from "tsyringe";
+// eslint-disable-next-line import/order
+import { container } from "tsyringe";
 
 class ImportCategoryController {
+    async handle(req: Request, res: Response): Promise<Response> {
+        const { file } = req;
 
-    async handle(req: Request, res: Response): Promise<Response> { 
-        const {file} = req;
-        
         const importCategoryUseCase = container.resolve(ImportCategoryUseCase);
 
         await importCategoryUseCase.execute(file);
@@ -16,4 +18,4 @@ class ImportCategoryController {
     }
 }
 
-export { ImportCategoryController }
+export { ImportCategoryController };
